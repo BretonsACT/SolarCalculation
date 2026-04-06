@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Paneles Solares</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/lucide@latest/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-elements">
+        <div class="blob sun-blob"></div>
+        <div class="blob energy-blob"></div>
+    </div>
+
+    <main class="container">
+        <header class="app-header">
+            <div class="icon-wrapper">
+                <i data-lucide="sun"></i>
+            </div>
+            <h1>Simulador Solar</h1>
+            <p>Calcula y compara el rendimiento de tu instalación fotovoltaica con o sin batería.</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- Pánel de controles -->
+            <aside class="glass-panel controls-panel">
+                <h2>Parámetros de la Instalación</h2>
+                
+                <div class="input-group">
+                    <label for="solarPower">
+                        <span>Potencia Solar Instalar (kW)</span>
+                        <span class="value-display" id="solarPowerVal">5 kW</span>
+                    </label>
+                    <input type="range" id="solarPower" min="1" max="15" step="0.5" value="5">
+                </div>
+
+                <div class="input-group">
+                    <label for="batterySize">
+                        <span>Tamaño de la Batería (kWh)</span>
+                        <span class="value-display" id="batterySizeVal">5 kWh</span>
+                    </label>
+                    <input type="range" id="batterySize" min="0" max="20" step="0.5" value="5">
+                    <small>0 significa que no se incluirá batería.</small>
+                </div>
+
+                <div class="divider"></div>
+                <h2>Tarifas y Consumo</h2>
+
+                <div class="input-group">
+                    <label for="yearlyConsumption">
+                        <span>Consumo Anual Estimado (kWh)</span>
+                        <span class="value-display" id="yearlyConsumptionVal">4000 kWh</span>
+                    </label>
+                    <input type="range" id="yearlyConsumption" min="1000" max="12000" step="100" value="4000">
+                </div>
+
+                <div class="inputs-row">
+                    <div class="input-group outline">
+                        <label for="pricePeak">Compra Pico (€/kWh)</label>
+                        <input type="number" id="pricePeak" step="0.01" value="0.25">
+                    </div>
+                    <div class="input-group outline">
+                        <label for="priceOffPeak">Compra Valle (€/kWh)</label>
+                        <input type="number" id="priceOffPeak" step="0.01" value="0.12">
+                    </div>
+                    <div class="input-group outline">
+                        <label for="priceSell">Venta a red (€/kWh)</label>
+                        <input type="number" id="priceSell" step="0.01" value="0.06">
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- Resultados -->
+            <section class="results-panel">
+                
+                <div class="glass-panel card-summary">
+                    <div class="card-header">
+                        <h3>Opción A: Sin Batería</h3>
+                        <div class="icon-small"><i data-lucide="zap"></i></div>
+                    </div>
+                    <div class="cost-display">
+                        <span class="cost-label">Coste Total Anual:</span>
+                        <span class="cost-value" id="costNoBattery">0 €</span>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat"><span class="label">Autoconsumo</span><strong id="selfConsNoBat">0%</strong></div>
+                        <div class="stat"><span class="label">Excedente Vendido</span><strong id="soldNoBat">0 kWh</strong></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel card-summary featured">
+                    <div class="card-header">
+                        <h3>Opción B: Con Batería</h3>
+                        <div class="icon-small"><i data-lucide="battery"></i></div>
+                    </div>
+                    <div class="cost-display">
+                        <span class="cost-label">Coste Total Anual:</span>
+                        <span class="cost-value highlight" id="costWithBattery">0 €</span>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat"><span class="label">Autoconsumo</span><strong id="selfConsBat">0%</strong></div>
+                        <div class="stat"><span class="label">Excedente Vendido</span><strong id="soldBat">0 kWh</strong></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel comparison-box">
+                    <h3>Impacto de la Batería</h3>
+                    <p class="comparison-text">
+                        Añadir una batería de <strong id="compBatSize">5 kWh</strong> te supondría un 
+                        ahorro extra de <strong id="compSavings" class="text-green">0 €</strong> al año respecto a la opción sin batería.
+                    </p>
+                    <div class="progress-bar-container">
+                        <div class="labels">
+                            <span>Ahorro Potencial</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="savingsFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="app.js"></script>
+</body>
+</html>
